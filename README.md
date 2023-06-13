@@ -5,7 +5,7 @@ Java JDK选择了GraalVM。
 ```shell
 bash <(curl -sL https://get.graalvm.org/jdk)
 ```
-或者 [下载](https://github.com/graalvm/graalvm-ce-builds/releases) 之后[安装](https://www.graalvm.org/latest/docs/getting-started/linux/)
+或者 [下载](https://github.com/graalvm/graalvm-ce-builds/releases) 之后 [安装](https://www.graalvm.org/latest/docs/getting-started/linux/)
 
 设置环境变量，在/etc/profile文件新增：
 ```shell
@@ -15,7 +15,8 @@ export PATH=$JAVA_HOME/bin:$PATH
 
 启动服务：
 ```shell
-nohup ./mvnw spring-boot:run >> app.log 2>> app.log &
+chmod +x mvnw
+nohup ./mvnw clean package spring-boot:run >> app.log 2>> app.log &
 ```
 
 ### 使用Docker && Native Image（实验）
