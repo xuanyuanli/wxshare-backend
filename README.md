@@ -17,10 +17,13 @@ export PATH=$JAVA_HOME/bin:$PATH
 ```shell
 chmod +x mvnw
 nohup ./mvnw clean package spring-boot:run >> app.log 2>> app.log &
+
+// or
+./mvnw clean package
+nohup java -jar target/wxshare-backend-1.0.jar >> app.log 2>> app.log &
 ```
 
 ### 使用Docker && Native Image（实验）
-
 安装Docker：
 ```shell
 curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
@@ -52,7 +55,7 @@ docker run --rm -v $(pwd):/app -w /app -v /mvn_repo:/root/.m2/repository -e DOCK
 - `/META-INF/native-image/ returned non-zero result`
 
 [TODO]：
-- 需要去掉`wx-java-mp-spring-boot-starter`依赖之后再实验一次。
+- 去掉`wx-java-mp-spring-boot-starter`依赖之后再试一次。
 
 
 参考：
