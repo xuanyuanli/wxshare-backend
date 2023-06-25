@@ -1,5 +1,5 @@
 # 安装GraalVM
-Java JDK选择了GraalVM。
+Java JDK选择了GraalVM，你也可以选择自己喜欢的JDK发行版。
 
 需要先安装GraalVM：
 ```shell
@@ -11,7 +11,11 @@ bash <(curl -sL https://get.graalvm.org/jdk)
 ```shell
 export JAVA_HOME=/usr/local/graalvm/graalvm-ce-java17-22.3.2
 export PATH=$JAVA_HOME/bin:$PATH
+
+export WX_MP_APPID=xxx
+export WX_MP_SECRET=xxx
 ```
+`WX_MP_APPID`和`WX_MP_SECRET`分别是微信公众号的AppID和Secret。如果不设置，可以在Java应用启动时指定（使用`-D WX_MP_APPID=xxx`）。
 
 启动服务：
 ```shell
@@ -56,7 +60,6 @@ docker run --rm -v $(pwd):/app -w /app -v /mvn_repo:/root/.m2/repository -e DOCK
 
 [TODO]：
 - 去掉`wx-java-mp-spring-boot-starter`依赖之后再试一次。
-
 
 参考：
 - https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/
