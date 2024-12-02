@@ -27,6 +27,12 @@ public class WechatController {
     @Resource
     private WxMpService wxMpService;
 
+    @Operation(summary = "首页")
+    @GetMapping({"/index", "/"})
+    public String index() {
+        return "hello";
+    }
+
     @Operation(summary = "获得JSSDK信息", description = "微信官方文档：https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html")
     @GetMapping("/wechat/jsSdkConfig")
     public WechatJsSdkDTO jsSdkConfig(String url) throws WxErrorException {

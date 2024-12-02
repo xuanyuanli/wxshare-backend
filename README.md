@@ -24,10 +24,10 @@ nohup ./mvnw clean package spring-boot:run >> app.log 2>> app.log &
 
 // or
 ./mvnw clean package
-nohup java -jar target/wxshare-backend-1.0.jar >> app.log 2>> app.log &
+nohup java -jar target/wxshare-backend-xx.jar >> app.log 2>> app.log &
 ```
 
-### 使用Docker && Native Image（实验）
+### 使用Docker && Native Image
 安装Docker：
 ```shell
 curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
@@ -36,32 +36,13 @@ systemctl daemon-reload
 systemctl restart docker.service
 ```
 
-启动Docker Daemon：
-```shell
-mkdir -p /etc/systemd/system/docker.service.d/
-vim /etc/systemd/system/docker.service.d/override.conf
-```
-写入：
-```text
-[Service]
-ExecStart=
-ExecStart=/usr/bin/dockerd -H unix:///var/run/docker.sock -H tcp://0.0.0.0:2376
-```
-
 构建镜像：
 ```shell
-mkdir /mvn_repo
-docker run --rm -v $(pwd):/app -w /app -v /mvn_repo:/root/.m2/repository -e DOCKER_HOST=tcp://172.25.227.88:2376  ghcr.io/graalvm/jdk:22.3.2  sh -c "./mvnw spring-boot:build-image -Pnative "
+./mvnw -Pnative spring-boot:build-image
 ```
 
-出现以下错误：
-- `org.springframework.boot.buildpack.platform.build.BuilderException: Builder lifecycle 'creator' failed with status code 51`
-- `/META-INF/native-image/ returned non-zero result`
+启动：
+```shell
+docker run -p 8080:8080 -e WX_MP_APPID=xxx -e WX_MP_SECRET=xxx --rm --name wxshare-backend wxshare-backend
+···
 
-[TODO]：
-- 去掉`wx-java-mp-spring-boot-starter`依赖之后再试一次。
-
-参考：
-- https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/
-- https://graalvm.github.io/native-build-tools/latest/maven-plugin.html
-- https://docs.spring.io/spring-boot/docs/current/reference/html/native-image.html#native-image.introducing-graalvm-native-images
